@@ -15,7 +15,7 @@ public class Scoring {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ScoreCalculator x = new ScoreCalculator("HKFEGFFK","HEL",15);
+        ScoreCalculator x = new ScoreCalculator("EZYI","HEL",15);
         
 
 

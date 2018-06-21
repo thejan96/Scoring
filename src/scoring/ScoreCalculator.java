@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public final class ScoreCalculator {
 
-    String word,constants,constants2,constants3,constants4,constants5;
+    String word,constants,constants2,constants3,constants4,constants5,constants6,constants7;
     int totalValue = 0, timeCount = 0;
     Map<Character, Integer> lettersMap;
     
@@ -53,13 +53,17 @@ public final class ScoreCalculator {
         
         this.constants = constants;     //If contants are on the beggining
         this.constants2= ".*"+constants+".*";     //If constants are somewhere on the word in same order
-        this.constants3= ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*"+constants.charAt(2)+".*";     //If constants are somewhere on the word in any order
-        this.constants4= ""+constants.charAt(0)+""+constants.charAt(1)+"|"+constants.charAt(1)+""+constants.charAt(2)+"|"+constants.charAt(0)+""+constants.charAt(2)+"";    //If only 2 constants are used on the beggining
-        this.constants5 = ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(0)+".*"+constants.charAt(2)+".*"; //If only 2 constants are used on anywhere
+        this.constants3= ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(0)+".*"+constants.charAt(2)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(0)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(2)+".*"+constants.charAt(0)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(1)+".*"+constants.charAt(0)+".*";     //If constants are somewhere on the word in any order
+        this.constants4 = "^"+constants.charAt(0)+""+constants.charAt(1)+"|^"+constants.charAt(1)+""+constants.charAt(2)+"|^"+constants.charAt(0)+""+constants.charAt(2)+""+"|^"+constants.charAt(1)+""+constants.charAt(0)+"|^"+constants.charAt(2)+""+constants.charAt(1)+"|^"+constants.charAt(2)+""+constants.charAt(0)+"";//If only 2 constants are used on the beggining
+        this.constants5 = ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(0)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(0)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(0)+".*";//If only 2 constants are used on anywhere
+        this.constants6 = "^H|^E|^L";   //If only 1 constants are used on the beggining
+        this.constants7 = ".*H.*|.*E.*|.*L.*";  //If only 1 constants are used on anywhere of word
+        
+        if (!"".equals(word)||this.timeCount>60) {
+            this.calculateScore(word);
+        }
         
         
-        //System.out.print(constants5);
-        this.calculateScore(word);
     }
        
     public void calculateScore(String word)
@@ -84,6 +88,12 @@ public final class ScoreCalculator {
         Pattern p4 = Pattern.compile(constants5);
         Matcher m4 = p4.matcher(word);
         
+        Pattern p5 = Pattern.compile(constants6);
+        Matcher m5 = p5.matcher(word);
+        
+        Pattern p6 = Pattern.compile(constants7);
+        Matcher m6 = p6.matcher(word);
+        
         
         if (m.lookingAt()) {      //Looking for given 3 constants in the begging of input
             System.out.print("done");
@@ -100,7 +110,48 @@ public final class ScoreCalculator {
         else if (m4.find()) {   //If only 2 constants are used on anywhere
             System.out.print("&&& Done 5 &&&&");
         }
+        else if (m5.find()) {   //If only 1 constants are used on the beggining
+            System.out.print("^^^^^ Done 6 ^^^^");
+        }
+         else if (m6.find()) {   //If only 1 constants are used on anywhere of word
+            System.out.print("@@@@ Done 7 @@@@");
+        }
+        
+        switch(word.length()){
+            case 11:
+                break;
+            case 10:
+                break;
+            case 9:
+                break;
+            case 8:
+                break;
+            case 7:
+                break;
+            case 6:
+                break;
+            case 5:
+                break;
+            case 4:
+                break;
+            case 3:
+                break;
+            case 2:
+                break;
+        }
+        
+        if (timeCount<15) {
             
+        }
+        else if (timeCount<30) {
+            
+        }
+        else if (timeCount<45) {
+            
+        }
+ 
+            
+        
         
         System.out.print(totalValue);
         //return totalValue;

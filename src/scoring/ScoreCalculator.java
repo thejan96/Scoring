@@ -56,8 +56,8 @@ public final class ScoreCalculator {
         this.constants3= ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(0)+".*"+constants.charAt(2)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(0)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(2)+".*"+constants.charAt(0)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(1)+".*"+constants.charAt(0)+".*";     //If constants are somewhere on the word in any order
         this.constants4 = "^"+constants.charAt(0)+""+constants.charAt(1)+"|^"+constants.charAt(1)+""+constants.charAt(2)+"|^"+constants.charAt(0)+""+constants.charAt(2)+""+"|^"+constants.charAt(1)+""+constants.charAt(0)+"|^"+constants.charAt(2)+""+constants.charAt(1)+"|^"+constants.charAt(2)+""+constants.charAt(0)+"";//If only 2 constants are used on the beggining
         this.constants5 = ".*"+constants.charAt(0)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(0)+".*"+constants.charAt(2)+".*|.*"+constants.charAt(1)+".*"+constants.charAt(0)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(1)+".*|.*"+constants.charAt(2)+".*"+constants.charAt(0)+".*";//If only 2 constants are used on anywhere
-        this.constants6 = "^H|^E|^L";   //If only 1 constants are used on the beggining
-        this.constants7 = ".*H.*|.*E.*|.*L.*";  //If only 1 constants are used on anywhere of word
+        this.constants6 = "^"+constants.charAt(0)+"|^"+constants.charAt(1)+"|^"+constants.charAt(2)+"";   //If only 1 constants are used on the beggining
+        this.constants7 = ".*"+constants.charAt(0)+".*|.*"+constants.charAt(1)+".*|.*"+constants.charAt(2)+".*";  //If only 1 constants are used on anywhere of word
         
         if (!"".equals(word)||this.timeCount>60) {
             this.calculateScore(word);
@@ -72,7 +72,7 @@ public final class ScoreCalculator {
 
             totalValue += lettersMap.get(word.charAt(j));
         }
-                
+               
         Pattern p = Pattern.compile(constants);
         Matcher m = p.matcher(word);
         
@@ -96,64 +96,105 @@ public final class ScoreCalculator {
         
         
         if (m.lookingAt()) {      //Looking for given 3 constants in the begging of input
-            System.out.print("done");
+            //totalValue +=10;
+            totalValue += totalValue *0.8;   //80% BONUS
+           // System.out.print("TotalH =" +totalValue);
         }
         else if (m1.find()) {   //If constants are somewhere on the word in same order
-            System.out.print("**done2**");
+            //totalValue *=8;
+            totalValue += totalValue *0.6; //60% BONUS
+            //System.out.print("Total'HEL'=" +totalValue);
         }
         else if (m2.find()) {   //If constants are somewhere on the word in any order
-            System.out.print("----done3----");
+            //totalValue *=6;
+            totalValue += totalValue *0.5; //50% BONUS
+            //System.out.print("Total'**HEL**' =" +totalValue);
         }
         else if (m3.find()) {   //If only 2 constants are used on the beggining
-            System.out.print("//// Done 4 /////");
+            //totalValue *=5;
+            totalValue += totalValue *0.4; //40% BONUS
+            //System.out.print("Total'EHL*' =" +totalValue);
         }
         else if (m4.find()) {   //If only 2 constants are used on anywhere
-            System.out.print("&&& Done 5 &&&&");
+            //totalValue *=4;
+            totalValue += totalValue *0.3; //30% BONUS
+            //System.out.print("Total''EH'' =" +totalValue);
         }
         else if (m5.find()) {   //If only 1 constants are used on the beggining
-            System.out.print("^^^^^ Done 6 ^^^^");
+            //totalValue *=3;
+            totalValue += totalValue *0.2; //20% BONUS
+            //System.out.print("Total'***HE**' =" +totalValue);
         }
          else if (m6.find()) {   //If only 1 constants are used on anywhere of word
-            System.out.print("@@@@ Done 7 @@@@");
+            //totalValue *=2;
+            totalValue += totalValue *0.1; //10% BONUS
+           //System.out.print("Total''*L**H**E*'' =" +totalValue);
         }
         
+        System.out.print(word.length());
         switch(word.length()){
             case 11:
+               totalValue +=10;
+               //System.out.print("Total CASE11 =" +totalValue);
                 break;
             case 10:
+                totalValue +=9;
+                //System.out.print("Total CASE10 =" +totalValue);
                 break;
             case 9:
+                totalValue +=8;
+                //System.out.print("Total CASE9 =" +totalValue);
                 break;
             case 8:
+                totalValue +=7;
+                //System.out.print("Total CASE8 =" +totalValue);
                 break;
             case 7:
+                totalValue *=6;
+                //System.out.print("Total CASE7 =" +totalValue);
                 break;
             case 6:
+                totalValue +=5;
+                //System.out.print("Total CASE6 =" +totalValue);
                 break;
             case 5:
+                totalValue +=4;
+                //System.out.print("Total CASE5 =" +totalValue);
                 break;
             case 4:
+                totalValue +=3;
+                //System.out.print("Total CASE4 =" +totalValue);
                 break;
             case 3:
+               totalValue +=2;
+               //System.out.print("Total CASE3 =" +totalValue);
                 break;
             case 2:
+                totalValue +=1;
+                //System.out.print("Total CASE2 =" +totalValue);
+                break;
+            default:
                 break;
         }
         
         if (timeCount<15) {
+             totalValue +=8;
+             //System.out.print("Total<15 =" +totalValue);
             
         }
         else if (timeCount<30) {
-            
+             totalValue +=5;
+             //System.out.print("Total<30 =" +totalValue);
         }
         else if (timeCount<45) {
-            
+             totalValue +=3;
+             //System.out.print("Total<45 =" +totalValue);
         }
  
             
         
         
-        System.out.print(totalValue);
+       System.out.print("Total SCORE =" +totalValue);
         //return totalValue;
     }
     
